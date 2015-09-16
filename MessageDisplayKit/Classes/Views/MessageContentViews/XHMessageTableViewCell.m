@@ -14,8 +14,7 @@ static const CGFloat kXHTimeStampLabelHeight = 20.0f;
 static const CGFloat kXHAvatarPaddingX = 8.0;
 static const CGFloat kXHAvatarPaddingY = 15;
 
-static const CGFloat kXHBubbleMessageViewPadding = 8;
-
+static const CGFloat kXHUserNameLabelHeight = 20;
 
 @interface XHMessageTableViewCell () {
     
@@ -160,9 +159,28 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
     self.displayTimestamp = displayTimestamp;
     self.timestampLabel.hidden = !self.displayTimestamp;
     if (displayTimestamp) {
-        self.timestampLabel.text = [NSDateFormatter localizedStringFromDate:message.timestamp
-                                                                  dateStyle:NSDateFormatterMediumStyle
-                                                                  timeStyle:NSDateFormatterShortStyle];
+        NSString *dateText = nil;
+        NSString *timeText = nil;
+        
+        NSDate *today = [NSDate date];
+        NSDateComponents *components = [[NSDateComponents alloc] init];
+        [components setDay:-1];
+        NSDate *yesterday = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:today options:0];
+        
+        NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:message.timestamp];
+        NSDateComponents *todayComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:today];
+        NSDateComponents *yesterdayComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:yesterday];
+        
+        if (dateComponents.year == todayComponents.year && dateComponents.month == todayComponents.month && dateComponents.day == todayComponents.day) {
+            dateText = NSLocalizedStringFromTable(@"Today", @"MessageDisplayKitString", @"今天");
+        } else if (dateComponents.year == yesterdayComponents.year && dateComponents.month == yesterdayComponents.month && dateComponents.day == yesterdayComponents.day) {
+            dateText = NSLocalizedStringFromTable(@"Yesterday", @"MessageDisplayKitString", @"昨天");
+        } else {
+            dateText = [NSDateFormatter localizedStringFromDate:message.timestamp dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
+        }
+        timeText = [NSDateFormatter localizedStringFromDate:message.timestamp dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+        
+        self.timestampLabel.text = [NSString stringWithFormat:@"%@ %@",dateText,timeText];
     }
 }
 
@@ -178,9 +196,17 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
     } else if (avatarURL) {
         [self configAvatarWithPhotoURLString:avatarURL];
     } else {
-        UIImage *avatarPhoto = [XHMessageAvatarFactory avatarImageNamed:[UIImage imageNamed:@"avatar"] messageAvatarType:XHMessageAvatarTypeSquare];
+        UIImage *avatarPhoto = [self getAvatarPlaceholderImage];
         [self configAvatarWithPhoto:avatarPhoto];
     }
+}
+
+- (UIImage *)getAvatarPlaceholderImage {
+    NSString *avatarPalceholderImageName = [[XHConfigurationHelper appearance].messageTableStyle objectForKey:kXHMessageTableAvatarPalceholderImageNameKey];
+    if (!avatarPalceholderImageName) {
+        avatarPalceholderImageName = @"avatar";
+    }
+    return [UIImage imageNamed:avatarPalceholderImageName];
 }
 
 - (void)configAvatarWithPhoto:(UIImage *)photo {
@@ -188,9 +214,12 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
 }
 
 - (void)configAvatarWithPhotoURLString:(NSString *)photoURLString {
-    self.avatarButton.messageAvatarType = XHMessageAvatarTypeSquare;
-    [self.avatarButton setImageWithURL:[NSURL URLWithString:photoURLString] placeholer:[UIImage imageNamed:@"avatar"]];
-    
+    BOOL customLoadAvatarNetworkImage = [[[XHConfigurationHelper appearance].messageTableStyle objectForKey:kXHMessageTableCustomLoadAvatarNetworImageKey] boolValue];
+    if (!customLoadAvatarNetworkImage) {
+        XHMessageAvatarType avatarType = [[[XHConfigurationHelper appearance].messageTableStyle objectForKey:kXHMessageTableAvatarTypeKey] integerValue];
+        self.avatarButton.messageAvatarType = avatarType;
+        [self.avatarButton setImageWithURL:[NSURL URLWithString:photoURLString] placeholer:[self getAvatarPlaceholderImage]];
+    }
 }
 
 - (void)configUserNameWithMessage:(id <XHMessageModel>)message {
@@ -214,10 +243,7 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
             break;
         }
         case XHBubbleMessageMediaTypeText:
-        case XHBubbleMessageMediaTypeVoice: {
-            self.messageBubbleView.voiceDurationLabel.text = [NSString stringWithFormat:@"%@\'\'", message.voiceDuration];
-//            break;
-        }
+        case XHBubbleMessageMediaTypeVoice:
         case XHBubbleMessageMediaTypeEmotion: {
             UITapGestureRecognizer *tapGestureRecognizer;
             if (currentMediaType == XHBubbleMessageMediaTypeText) {
@@ -256,14 +282,43 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
     if (longPressGestureRecognizer.state != UIGestureRecognizerStateBegan || ![self becomeFirstResponder])
         return;
     
-    UIMenuItem *copy = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"copy", @"MessageDisplayKitString", @"复制文本消息") action:@selector(copyed:)];
-    UIMenuItem *transpond = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"transpond", @"MessageDisplayKitString", @"转发") action:@selector(transpond:)];
-    UIMenuItem *favorites = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"favorites", @"MessageDisplayKitString", @"收藏") action:@selector(favorites:)];
-    UIMenuItem *more = [[UIMenuItem alloc] initWithTitle:NSLocalizedStringFromTable(@"more", @"MessageDisplayKitString", @"更多") action:@selector(more:)];
+    NSArray *popMenuTitles = [[XHConfigurationHelper appearance] popMenuTitles];
+    NSMutableArray *menuItems = [[NSMutableArray alloc] init];
+    for (int i = 0; i < popMenuTitles.count; i ++) {
+        NSString *title = popMenuTitles[i];
+        SEL action = nil;
+        switch (i) {
+            case 0: {
+                if ([self.messageBubbleView.message messageMediaType] == XHBubbleMessageMediaTypeText) {
+                    action = @selector(copyed:);
+                }
+                break;
+            }
+            case 1: {
+                action = @selector(transpond:);
+                break;
+            }
+            case 2: {
+                action = @selector(favorites:);
+                break;
+            }
+            case 3: {
+                action = @selector(more:);
+                break;
+            }
+            default:
+                break;
+        }
+        if (action) {
+            UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:title action:action];
+            if (item) {
+                [menuItems addObject:item];
+            }
+        }
+    }
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
-    [menu setMenuItems:[NSArray arrayWithObjects:copy, transpond, favorites, more, nil]];
-    
+    [menu setMenuItems:menuItems];
     
     CGRect targetRect = [self convertRect:[self.messageBubbleView bubbleFrame]
                                  fromView:self.messageBubbleView];
@@ -323,16 +378,14 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
 + (CGFloat)calculateCellHeightWithMessage:(id <XHMessageModel>)message
                         displaysTimestamp:(BOOL)displayTimestamp {
     
-    CGFloat timestampHeight = displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding * 2) : kXHLabelPadding;
-    CGFloat avatarHeight = kXHAvatarImageSize;
+    // 第一，是否有时间戳的显示
+    CGFloat timestampHeight = displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding * 2) : 0;
     
-    CGFloat userNameHeight = 20;
+    CGFloat userInfoNeedHeight = kXHAvatarPaddingY + kXHAvatarImageSize + (message.shouldShowUserName ? kXHUserNameLabelHeight : 0) + kXHAvatarPaddingY + timestampHeight;
     
-    CGFloat subviewHeights = timestampHeight + kXHBubbleMessageViewPadding * 2 + userNameHeight;
+    CGFloat bubbleMessageHeight = [XHMessageBubbleView calculateCellHeightWithMessage:message] + timestampHeight;
     
-    CGFloat bubbleHeight = [XHMessageBubbleView calculateCellHeightWithMessage:message];
-    
-    return subviewHeights + MAX(avatarHeight, bubbleHeight);
+    return MAX(bubbleMessageHeight, userInfoNeedHeight);
 }
 
 #pragma mark - Life cycle
@@ -361,11 +414,19 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
         
         // 1、是否显示Time Line的label
         if (!_timestampLabel) {
-            LKBadgeView *timestampLabel = [[LKBadgeView alloc] initWithFrame:CGRectMake(0, kXHLabelPadding, 160, kXHTimeStampLabelHeight)];
+            UIColor *timestampLabelTextColor = [[XHConfigurationHelper appearance].messageTableStyle objectForKey:kXHMessageTableTimestampTextColorKey];
+            if (!timestampLabelTextColor) {
+                timestampLabelTextColor = [UIColor whiteColor];
+            }
+            UIColor *timestampBackgroundColor = [[XHConfigurationHelper appearance].messageTableStyle objectForKey:kXHMessageTableTimestampBackgroundColorKey];
+            if (!timestampBackgroundColor) {
+                timestampBackgroundColor = [UIColor colorWithWhite:0.734 alpha:1.000];
+            }
+            LKBadgeView *timestampLabel = [[LKBadgeView alloc] initWithFrame:CGRectMake(0, kXHLabelPadding, MDK_SCREEN_WIDTH, kXHTimeStampLabelHeight)];
             timestampLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-            timestampLabel.badgeColor = [UIColor colorWithWhite:0.000 alpha:0.380];
-            timestampLabel.textColor = [UIColor whiteColor];
-            timestampLabel.font = [UIFont systemFontOfSize:13.0f];
+            timestampLabel.badgeColor = timestampBackgroundColor;
+            timestampLabel.textColor = timestampLabelTextColor;
+            timestampLabel.font = [UIFont systemFontOfSize:10.0f];
             timestampLabel.center = CGPointMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) / 2.0, timestampLabel.center.y);
             [self.contentView addSubview:timestampLabel];
             [self.contentView bringSubviewToFront:timestampLabel];
@@ -373,55 +434,45 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
         }
         
         // 2、配置头像
-        // avatar
         CGRect avatarButtonFrame;
         switch (message.bubbleMessageType) {
             case XHBubbleMessageTypeReceiving:
-                avatarButtonFrame = CGRectMake(kXHAvatarPaddingX, kXHAvatarPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0), kXHAvatarImageSize, kXHAvatarImageSize);
+                avatarButtonFrame = CGRectMake(kXHAvatarPaddingX,
+                                               kXHAvatarPaddingY + (self.displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding * 2) : 0),
+                                               kXHAvatarImageSize,
+                                               kXHAvatarImageSize);
                 break;
             case XHBubbleMessageTypeSending:
-                avatarButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kXHAvatarImageSize - kXHAvatarPaddingX, kXHAvatarPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0), kXHAvatarImageSize, kXHAvatarImageSize);
+                avatarButtonFrame = CGRectMake(CGRectGetWidth(self.bounds) - kXHAvatarImageSize - kXHAvatarPaddingX,
+                                               kXHAvatarPaddingY + (self.displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding * 2) : 0),
+                                               kXHAvatarImageSize,
+                                               kXHAvatarImageSize);
                 break;
             default:
                 break;
         }
         
         UIButton *avatarButton = [[UIButton alloc] initWithFrame:avatarButtonFrame];
-        [avatarButton setImage:[XHMessageAvatarFactory avatarImageNamed:[UIImage imageNamed:@"avatar"] messageAvatarType:XHMessageAvatarTypeCircle] forState:UIControlStateNormal];
+        [avatarButton setImage:[self getAvatarPlaceholderImage] forState:UIControlStateNormal];
         [avatarButton addTarget:self action:@selector(avatarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:avatarButton];
         self.avatarButton = avatarButton;
         
-        // 3、配置用户名
-        UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatarButton.bounds) + 20, 20)];
-        userNameLabel.textAlignment = NSTextAlignmentCenter;
-        userNameLabel.backgroundColor = [UIColor clearColor];
-        userNameLabel.font = [UIFont systemFontOfSize:12];
-        userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
-        [self.contentView addSubview:userNameLabel];
-        self.userNameLabel = userNameLabel;
+        if (message.shouldShowUserName) {
+            // 3、配置用户名
+            UILabel *userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.avatarButton.bounds) + 20, kXHUserNameLabelHeight)];
+            userNameLabel.textAlignment = NSTextAlignmentCenter;
+            userNameLabel.backgroundColor = [UIColor clearColor];
+            userNameLabel.font = [UIFont systemFontOfSize:12];
+            userNameLabel.textColor = [UIColor colorWithRed:0.140 green:0.635 blue:0.969 alpha:1.000];
+            [self.contentView addSubview:userNameLabel];
+            self.userNameLabel = userNameLabel;
+        }
         
         // 4、配置需要显示什么消息内容，比如语音、文字、视频、图片
         if (!_messageBubbleView) {
-            CGFloat bubbleX = 0.0f;
-            
-            CGFloat offsetX = 0.0f;
-            
-            if (message.bubbleMessageType == XHBubbleMessageTypeReceiving)
-                bubbleX = kXHAvatarImageSize + kXHAvatarPaddingX + kXHAvatarPaddingX;
-            else
-                offsetX = kXHAvatarImageSize + kXHAvatarPaddingX + kXHAvatarPaddingX;
-            
-            CGRect frame = CGRectMake(bubbleX,
-                                      kXHBubbleMessageViewPadding + (self.displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding) : kXHLabelPadding),
-                                      self.contentView.frame.size.width - bubbleX - offsetX,
-                                      self.contentView.frame.size.height - (kXHBubbleMessageViewPadding + (self.displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding) : kXHLabelPadding)));
-            
             // bubble container
-            XHMessageBubbleView *messageBubbleView = [[XHMessageBubbleView alloc] initWithFrame:frame message:message];
-            messageBubbleView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
-                                                  | UIViewAutoresizingFlexibleHeight
-                                                  | UIViewAutoresizingFlexibleBottomMargin);
+            XHMessageBubbleView *messageBubbleView = [[XHMessageBubbleView alloc] initWithFrame:CGRectZero message:message];
             [self.contentView addSubview:messageBubbleView];
             [self.contentView sendSubviewToBack:messageBubbleView];
             self.messageBubbleView = messageBubbleView;
@@ -447,24 +498,32 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    // 布局头像
     CGFloat layoutOriginY = kXHAvatarPaddingY + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0);
     CGRect avatarButtonFrame = self.avatarButton.frame;
     avatarButtonFrame.origin.y = layoutOriginY;
     avatarButtonFrame.origin.x = ([self bubbleMessageType] == XHBubbleMessageTypeReceiving) ? kXHAvatarPaddingX : ((CGRectGetWidth(self.bounds) - kXHAvatarPaddingX - kXHAvatarImageSize));
-    
-    layoutOriginY = kXHBubbleMessageViewPadding + (self.displayTimestamp ? kXHTimeStampLabelHeight : 0);
-    CGRect bubbleMessageViewFrame = self.messageBubbleView.frame;
-    bubbleMessageViewFrame.origin.y = layoutOriginY;
-    
-    CGFloat bubbleX = 0.0f;
-    if ([self bubbleMessageType] == XHBubbleMessageTypeReceiving)
-        bubbleX = kXHAvatarImageSize + kXHAvatarPaddingX + kXHAvatarPaddingX;
-    bubbleMessageViewFrame.origin.x = bubbleX;
-    
     self.avatarButton.frame = avatarButtonFrame;
     
-    self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatarButtonFrame), CGRectGetMaxY(avatarButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
+    if (self.messageBubbleView.message.shouldShowUserName) {
+        // 布局用户名
+        self.userNameLabel.center = CGPointMake(CGRectGetMidX(avatarButtonFrame), CGRectGetMaxY(avatarButtonFrame) + CGRectGetMidY(self.userNameLabel.bounds));
+    }
     
+    // 布局消息内容的View
+    CGFloat bubbleX = 0.0f;
+    CGFloat offsetX = 0.0f;
+    if ([self bubbleMessageType] == XHBubbleMessageTypeReceiving) {
+        bubbleX = kXHAvatarImageSize + kXHAvatarPaddingX * 2;
+    } else {
+        offsetX = kXHAvatarImageSize + kXHAvatarPaddingX * 2;
+    }
+    CGFloat timeStampLabelNeedHeight = (self.displayTimestamp ? (kXHTimeStampLabelHeight + kXHLabelPadding) : 0);
+    
+    CGRect bubbleMessageViewFrame = CGRectMake(bubbleX,
+                              timeStampLabelNeedHeight,
+                              CGRectGetWidth(self.contentView.bounds) - bubbleX - offsetX,
+                              CGRectGetHeight(self.contentView.bounds) - timeStampLabelNeedHeight);
     self.messageBubbleView.frame = bubbleMessageViewFrame;
 }
 
@@ -481,11 +540,17 @@ static const CGFloat kXHBubbleMessageViewPadding = 8;
 - (void)prepareForReuse {
     // 这里做清除工作
     [super prepareForReuse];
-    self.messageBubbleView.animationVoiceImageView.image = nil;
     self.messageBubbleView.displayTextView.text = nil;
     self.messageBubbleView.displayTextView.attributedText = nil;
-    self.messageBubbleView.bubblePhotoImageView.messagePhoto = nil;
+    self.messageBubbleView.bubbleImageView.image = nil;
     self.messageBubbleView.emotionImageView.animatedImage = nil;
+    self.messageBubbleView.animationVoiceImageView.image = nil;
+    self.messageBubbleView.voiceDurationLabel.text = nil;
+    self.messageBubbleView.bubblePhotoImageView.messagePhoto = nil;
+    self.messageBubbleView.geolocationsLabel.text = nil;
+    
+    self.userNameLabel.text = nil;
+    [self.avatarButton setImage:nil forState:UIControlStateNormal];
     self.timestampLabel.text = nil;
 }
 

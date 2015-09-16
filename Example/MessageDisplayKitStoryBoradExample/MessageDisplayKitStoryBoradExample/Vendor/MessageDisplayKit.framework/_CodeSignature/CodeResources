@@ -4,34 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>AddGroupMemberBtn@2x.png</key>
-		<data>
-		ats/3YEuydebqEh8gQafNoXWWrc=
-		</data>
-		<key>AddGroupMemberBtnHL@2x.png</key>
-		<data>
-		05IG/QrKZGYcARuuQ6cwhGrUfXY=
-		</data>
-		<key>CellBlueSelected@2x.png</key>
-		<data>
-		baAMFH2TFlPyW672j3isFpYkoI4=
-		</data>
-		<key>CellGraySelected@2x.png</key>
-		<data>
-		CvnMDAgF0UWA9SsHwuPc3vcdVFQ=
-		</data>
-		<key>CellNotSelected@2x.png</key>
-		<data>
-		+arIhG3Q7t0iFUUlXnR34caFDR0=
-		</data>
-		<key>CellRedSelected@2x.png</key>
-		<data>
-		apkxcvOmepOqTsdz73lm/q3NO6A=
-		</data>
-		<key>ContactsPanelDotRect@2x.png</key>
-		<data>
-		cu4Lti1H7lwEDXkurWsGUH3LwY0=
-		</data>
 		<key>Fav_Cell_Loc@2x.png</key>
 		<data>
 		dcmi0ofin2g6j6SA4tDnSIzaJyk=
@@ -52,21 +24,17 @@
 		<data>
 		/eBkVeT+9hr2nPgrXtPn+Jq9/1k=
 		</data>
-		<key>Headers/NSMutableAttributedString+Helper.h</key>
-		<data>
-		jVKDXhu1YTD/x0zi/73Wpm3+q5M=
-		</data>
 		<key>Headers/NSString+MessageInputView.h</key>
 		<data>
 		aqJBcG5B8df03eRbYC3X0GNOYuo=
 		</data>
 		<key>Headers/NSString+XHMD5.h</key>
 		<data>
-		Qlk78Xas+7AN9UM/DsgvLAHbe2Q=
+		EvIUT6KMcZX+SbKNuZSYGyQtgj8=
 		</data>
 		<key>Headers/SECompatibility.h</key>
 		<data>
-		JPAI3mzClGWJMAL42cT6TokmOcg=
+		jdCJhm2t2TAvVGYnEB0Oeutpr0A=
 		</data>
 		<key>Headers/SEConstants.h</key>
 		<data>
@@ -82,7 +50,7 @@
 		</data>
 		<key>Headers/SESelectionGrabber.h</key>
 		<data>
-		ZGs2qQOO+S2CvYmjN0CZA/1OEQo=
+		LhyzI5TIQkM34SaR/g3szOR9nto=
 		</data>
 		<key>Headers/SETextAttachment.h</key>
 		<data>
@@ -90,15 +58,15 @@
 		</data>
 		<key>Headers/SETextEditingCaret.h</key>
 		<data>
-		cakS5an+eGxKGZaNMM/UfCfIhjk=
+		hJ2/al5xKZlXC1/9MzCIYWewn2Y=
 		</data>
 		<key>Headers/SETextGeometry.h</key>
 		<data>
-		txAcFFXP3VGHoYjeiinUtb2UdVg=
+		7WIZR7aSqzsdeeVCSvFmur2OJN4=
 		</data>
 		<key>Headers/SETextInput.h</key>
 		<data>
-		kVn1ioK3oxSZLQc0wCnG2h6othM=
+		7qehTtjM3j5z0U6kShTTMcJfOXU=
 		</data>
 		<key>Headers/SETextLayout.h</key>
 		<data>
@@ -106,11 +74,11 @@
 		</data>
 		<key>Headers/SETextMagnifierCaret.h</key>
 		<data>
-		3f2d7LeNtmwbjbBT7hwj+0M0x+k=
+		Pqxx/o9mBUYZBTcmGNubyo6y2j0=
 		</data>
 		<key>Headers/SETextMagnifierRanged.h</key>
 		<data>
-		z5lSVsLs83ickASSmEMuWxDZYno=
+		+TZCcY5Ek/JBc5MRQBJuGthM3Ok=
 		</data>
 		<key>Headers/SETextSelection.h</key>
 		<data>
@@ -118,11 +86,11 @@
 		</data>
 		<key>Headers/SETextSelectionView.h</key>
 		<data>
-		mKUAwEl84II41OCxUV3CiSm7+kQ=
+		kRyNAqht1NiIvcFFnO7IYK/DRr4=
 		</data>
 		<key>Headers/SETextView.h</key>
 		<data>
-		T3jZn+nchJnl58k7i6oCIQzSZGA=
+		LENMlk9FALKqS3gSqa2cgUGMzLA=
 		</data>
 		<key>Headers/UIImage+Alpha.h</key>
 		<data>
@@ -138,7 +106,7 @@
 		</data>
 		<key>Headers/UIImage+Utility.h</key>
 		<data>
-		SAooL6Hwday7A/OqjD36VR/uIbA=
+		KIYF4OupJo5RmeyPWRNG+/UJHGU=
 		</data>
 		<key>Headers/UIImage+XHRounded.h</key>
 		<data>
@@ -146,7 +114,7 @@
 		</data>
 		<key>Headers/UIScrollView+XHkeyboardControl.h</key>
 		<data>
-		C1Y6i5MaaRobm+WysV/W0k6MTe8=
+		E6LYWtGojaeuNc57A9YD9LwIUD4=
 		</data>
 		<key>Headers/UIView+XHRemoteImage.h</key>
 		<data>
@@ -166,7 +134,7 @@
 		</data>
 		<key>Headers/XHBubblePhotoImageView.h</key>
 		<data>
-		r/j/fr7Y3RrWW0ZwWIZJim9UcpQ=
+		GN9MFfzo5S+e1CJ56TRP4CbX1S4=
 		</data>
 		<key>Headers/XHCacheManager.h</key>
 		<data>
@@ -175,6 +143,10 @@
 		<key>Headers/XHCaptureHelper.h</key>
 		<data>
 		qDwondx9l0ISI4JnY7lch6wzX3c=
+		</data>
+		<key>Headers/XHConfigurationHelper.h</key>
+		<data>
+		qLy70wfJHYpTJKIvbrlssK8gcfc=
 		</data>
 		<key>Headers/XHDisplayEmotionViewController.h</key>
 		<data>
@@ -194,7 +166,7 @@
 		</data>
 		<key>Headers/XHEmotion.h</key>
 		<data>
-		p1HQRpyU3xVZuyC3TDf9Lpz5tX4=
+		muxcmi7IE+l9BtKNhHHMjjVSBx4=
 		</data>
 		<key>Headers/XHEmotionCollectionViewCell.h</key>
 		<data>
@@ -222,7 +194,7 @@
 		</data>
 		<key>Headers/XHFoundationMacro.h</key>
 		<data>
-		9BP8WuvzszKICN6zihZQlYUilDg=
+		OAXi1OXp5YQwswW+dQ5J0VezdF8=
 		</data>
 		<key>Headers/XHHTTPClient.h</key>
 		<data>
@@ -238,7 +210,7 @@
 		</data>
 		<key>Headers/XHMessage.h</key>
 		<data>
-		5JUspjc50Sgib1BWG+BdP93u+Wk=
+		66OZjUkM2BpYoumbDMCF97TxoIM=
 		</data>
 		<key>Headers/XHMessageAvatarFactory.h</key>
 		<data>
@@ -246,7 +218,7 @@
 		</data>
 		<key>Headers/XHMessageBubbleFactory.h</key>
 		<data>
-		1R95I+kSfG0iVh+eXINq11JzZ0k=
+		YH5uE9n6f3LS81zwfDEJ0RY+7+U=
 		</data>
 		<key>Headers/XHMessageBubbleHelper.h</key>
 		<data>
@@ -254,15 +226,15 @@
 		</data>
 		<key>Headers/XHMessageBubbleView.h</key>
 		<data>
-		Lj33IWNBG0HmaB6GunsJ1ZHvK7Y=
+		befeqg47XlwZUFmoQ5s0KGQBEvk=
 		</data>
 		<key>Headers/XHMessageInputView.h</key>
 		<data>
-		QnaBsqNIgZtxMbmGgQapbDTb2Vs=
+		ZhHhq5d2cFryFIn9qXGKDF3TKtg=
 		</data>
 		<key>Headers/XHMessageModel.h</key>
 		<data>
-		c5YJDoG4sy7xC0gOmSiHpRjBpPg=
+		BMVFzKfh2CsaFFZYlfVT42IzTMo=
 		</data>
 		<key>Headers/XHMessageTableView.h</key>
 		<data>
@@ -270,11 +242,11 @@
 		</data>
 		<key>Headers/XHMessageTableViewCell.h</key>
 		<data>
-		Pl1HmuDyiw6qJpaUnJlcZhgWlS4=
+		CJjSgH+xJwSnxTXV1v8cg4NUvB8=
 		</data>
 		<key>Headers/XHMessageTableViewController.h</key>
 		<data>
-		ugQKAN9oPus7hMTUBX7ErN1ypi0=
+		yep5OSSTokL2xwepv6S19f66OzM=
 		</data>
 		<key>Headers/XHMessageTextView.h</key>
 		<data>
@@ -326,23 +298,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		KvcRlSTZSOOfon7mLYOkWxxHWbU=
+		ZLq2aI9jFdkKmx6jwznvCYXQwmo=
 		</data>
 		<key>MessageVideoPlay@2x.png</key>
 		<data>
 		yJ5NL6IrhVPqy2CYZd1QXYV9DFs=
-		</data>
-		<key>MoreFunctionFrame@2x.png</key>
-		<data>
-		joyykiYZrrPU5DEHQ6VNSA+grrw=
-		</data>
-		<key>MultiSelectedPanelBkg@2x.png</key>
-		<data>
-		HBUB/sWc2PBVMb32NPNxglHncHQ=
-		</data>
-		<key>MultiSelectedPanelConfirmBtnbKG@2x.png</key>
-		<data>
-		rYdbwZRkQNu4MLhStah8EJifFUQ=
 		</data>
 		<key>ReceiverVoiceNodePlaying000@2x.png</key>
 		<data>
@@ -350,19 +310,19 @@
 		</data>
 		<key>ReceiverVoiceNodePlaying001@2x.png</key>
 		<data>
-		ve5W9cCe6RACkE+4ulw04DmcvdE=
+		Zm8fEaRUUJ9ZoosnZUufBejUf6I=
 		</data>
 		<key>ReceiverVoiceNodePlaying002@2x.png</key>
 		<data>
-		oD1qQfLA33nmY7gFP9Fg33v+IOs=
+		tqxrWeNyyN0zPNqvjIBwLL426VY=
 		</data>
 		<key>ReceiverVoiceNodePlaying003@2x.png</key>
 		<data>
-		QwjAD9biP6atZkUO7HBHm3zkQHI=
+		guZlK+YNA3/A5z57Pu+PyOuM5sE=
 		</data>
 		<key>ReceiverVoiceNodePlaying@2x.png</key>
 		<data>
-		sSD3+yTCuSZkY5q9UhHIzGqTD2I=
+		tcjm1Ysw9pP5hTnXNtZiiiC+0vw=
 		</data>
 		<key>RecordCancel@2x.png</key>
 		<data>
@@ -476,29 +436,25 @@
 		<data>
 		csIkRjZ7kX6DGycyRH0N1koDg8M=
 		</data>
-		<key>SearchIcon@2x.png</key>
-		<data>
-		aR2BxI8vsXM9J+JuznwfHPThx+A=
-		</data>
 		<key>SenderVoiceNodePlaying000@2x.png</key>
 		<data>
 		H+b58WdNjEq3Jy9fFoFXz8nIFxQ=
 		</data>
 		<key>SenderVoiceNodePlaying001@2x.png</key>
 		<data>
-		KIJ09kSTjGGFw1ht1fCt3gvyUkw=
+		b+blmbxkZTfSiegj7YwqaykgFyg=
 		</data>
 		<key>SenderVoiceNodePlaying002@2x.png</key>
 		<data>
-		xyIc/OdqvnhKFurNDz3+Y/mxdwE=
+		dC6SEPzIQR+C9mOSKBIju9oG9MY=
 		</data>
 		<key>SenderVoiceNodePlaying003@2x.png</key>
 		<data>
-		TFdsJjg79c2yDqS6lt4AofeqNos=
+		I9fcwTy5pc5AO6f3+DEF1IFH2XY=
 		</data>
 		<key>SenderVoiceNodePlaying@2x.png</key>
 		<data>
-		bo87bVfu1Ys6fg74in9Ppt4L3rE=
+		nzKgSh+3ZnwuXMWQSyClNNDnfvw=
 		</data>
 		<key>VoiceBtn_Black@2x.png</key>
 		<data>
@@ -512,50 +468,22 @@
 		<data>
 		sgyKq5ukhaE2rvkeIQubrW1jMCI=
 		</data>
-		<key>contacts_add_friend@2x.png</key>
-		<data>
-		gLgdZpMgPLWkTiZGkQWfNGEhZ3I=
-		</data>
-		<key>contacts_add_newmessage@2x.png</key>
-		<data>
-		sjylkJasCJnJfGqhiJJRc+7oxK0=
-		</data>
-		<key>contacts_add_photo@2x.png</key>
-		<data>
-		qhzFc8FgntgrHkmNZ3FD6fv596U=
-		</data>
-		<key>contacts_add_scan@2x.png</key>
-		<data>
-		I9RILZXr1Zfw28zIJBUjlmYc9Uc=
-		</data>
-		<key>contacts_add_voip@2x.png</key>
-		<data>
-		IACo6nRY/MkDyGkHXVDETEaHj04=
-		</data>
 		<key>en.lproj/MessageDisplayKitString.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KW7VbZddgjwOPZ0O2Ej7IQ0JP9E=
+			5attu1fe2JTTuhjUZ09sb0frT0U=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
 		<key>face@2x.png</key>
 		<data>
-		PkqglYWfIbI9bXsetI5XAxqWFkE=
+		nE1ghRflqINwQndmuU3hGZ9S/O0=
 		</data>
 		<key>face_HL@2x.png</key>
 		<data>
-		RpZecFIHoxk0TfaGIk/Fz2r0Drc=
-		</data>
-		<key>input-bar-background.png</key>
-		<data>
-		yMS0D7sCQDmVwD4oRSxQtYLLA+M=
-		</data>
-		<key>input-bar-background@2x.png</key>
-		<data>
-		V0Zl8xYWKAR7UyiVq1ElVhKA+SI=
+		VCik7fmOwBvy9Y8p/aytqXy8b4k=
 		</data>
 		<key>input-bar-flat.png</key>
 		<data>
@@ -565,175 +493,55 @@
 		<data>
 		Dvdtjjmqm/RF03CnmMi7uxm6MDU=
 		</data>
-		<key>input-field-cover.png</key>
+		<key>keyboard@2x.png</key>
 		<data>
-		nc3jcWtvpTPa7YHCD9zJHgxWDI4=
+		4yYUsM7jZxU/L+vtkpSeVichASc=
 		</data>
-		<key>input-field-cover@2x.png</key>
+		<key>keyboard_HL@2x.png</key>
 		<data>
-		ENE6CgnzqA2UdE6hEq6RqWOy804=
-		</data>
-		<key>keyborad@2x.png</key>
-		<data>
-		FQLGCvP9vvkzRfB16qIW9h/EhEE=
-		</data>
-		<key>keyborad_HL@2x.png</key>
-		<data>
-		I/XsMZO/06IxD1U5uShCJDXHOCs=
+		2z8+mc0Esm/ShNPglb7iOJFVSdo=
 		</data>
 		<key>msg_chat_voice_unread.png</key>
 		<data>
-		eBmAI0u0TQB+6lW0gk2xU9vxtbA=
+		zF3nN5tWim2NNb459BmirF2lqV8=
 		</data>
 		<key>msg_chat_voice_unread@2x.png</key>
 		<data>
-		CTOyY8mqW5Y0RaxzOA6gUI0M0FU=
+		O6wZdV24rGbSj0fGOdeM9bqnmFY=
 		</data>
 		<key>multiMedia@2x.png</key>
 		<data>
-		9yNcIi3zWXmsRmh0g4tFkoFXOFU=
+		7ti+5vWUIjwLRnD6Ht9i2Dzxnl0=
 		</data>
 		<key>multiMedia_HL@2x.png</key>
 		<data>
-		dOJutN1UAm9ubrXEzRiTFCI5aoY=
+		ddk1hIv9f9Npm+wqldYi6qm0pc4=
 		</data>
 		<key>placeholderImage@2x.png</key>
 		<data>
 		cPJi/+3A51RBz150RXajBPNj+so=
 		</data>
-		<key>section0_emotion0@2x.png</key>
-		<data>
-		2JOc98PNwXlanz8KHWG37ufsSRM=
-		</data>
-		<key>section0_emotion10@2x.png</key>
-		<data>
-		WVKmt9nQJnx8r3RmjhqWW1xmiyU=
-		</data>
-		<key>section0_emotion11@2x.png</key>
-		<data>
-		ObhhFIPLvkOVE02MQLPD1YJX2SY=
-		</data>
-		<key>section0_emotion12@2x.png</key>
-		<data>
-		XejvFuKrSp4aj4csxSIAm1dwFXA=
-		</data>
-		<key>section0_emotion13@2x.png</key>
-		<data>
-		EVbDg3PHMQYxBxXbW5sFFZ04Hu0=
-		</data>
-		<key>section0_emotion14@2x.png</key>
-		<data>
-		ObhhFIPLvkOVE02MQLPD1YJX2SY=
-		</data>
-		<key>section0_emotion15@2x.png</key>
-		<data>
-		XejvFuKrSp4aj4csxSIAm1dwFXA=
-		</data>
-		<key>section0_emotion1@2x.png</key>
-		<data>
-		/dJ9U97NYCMKUjF1yl77dpZDgwg=
-		</data>
-		<key>section0_emotion2@2x.png</key>
-		<data>
-		RgrUY40O7Ltma9rtFJ8Dzdt0vqI=
-		</data>
-		<key>section0_emotion3@2x.png</key>
-		<data>
-		eO3XcnCVnVNgZtOZfK0pCMHkamU=
-		</data>
-		<key>section0_emotion4@2x.png</key>
-		<data>
-		EYNcoR/dkdtWL+dOLO9PK7S3re4=
-		</data>
-		<key>section0_emotion5@2x.png</key>
-		<data>
-		dEvWG0xWxvp1ya559wZYHBUFRBI=
-		</data>
-		<key>section0_emotion6@2x.png</key>
-		<data>
-		QfVJli+/e8adath8DVr9Y501EMA=
-		</data>
-		<key>section0_emotion7@2x.png</key>
-		<data>
-		0ITKYXY2S5x+dr6BbpoyOBvcIUM=
-		</data>
-		<key>section0_emotion8@2x.png</key>
-		<data>
-		myWtn9avO9CYFqAKADqunJCog9M=
-		</data>
-		<key>section0_emotion9@2x.png</key>
-		<data>
-		qS30aIT9KKW7FxBEgoOfGQrqhKQ=
-		</data>
-		<key>sharemore_friendcard@2x.png</key>
-		<data>
-		Lj4MT11sTDbtkvjnFj4IiiPcUjU=
-		</data>
-		<key>sharemore_location@2x.png</key>
-		<data>
-		uSTrWJyg0/4q/T+2PhuW+rBeORM=
-		</data>
-		<key>sharemore_myfav@2x.png</key>
-		<data>
-		mjXbBIH2st0YTTqNyUM2DhD73oI=
-		</data>
-		<key>sharemore_openapi@2x.png</key>
-		<data>
-		Z2Whs3V6mLq8mAmVN/z+fs7choM=
-		</data>
-		<key>sharemore_pic@2x.png</key>
-		<data>
-		afisgQftxBtroXqt8x+lXDo30Ok=
-		</data>
-		<key>sharemore_video@2x.png</key>
-		<data>
-		/4BKxelrXw2KjhQaiSGbfd7JPhQ=
-		</data>
-		<key>sharemore_videovoip@2x.png</key>
-		<data>
-		a00rJxTs5tT6QYi6c41KcBwXQQM=
-		</data>
-		<key>sharemore_voiceinput@2x.png</key>
-		<data>
-		qtV5d548eiRwX7pYezEOa37VX+k=
-		</data>
-		<key>sharemore_voipvoice@2x.png</key>
-		<data>
-		zDPumhOO0wGlJF0Dg0R9sMvc0Ac=
-		</data>
-		<key>sharemore_wxtalk@2x.png</key>
-		<data>
-		2lnnB2TB59Z4V/VZRoS3Tvou7eU=
-		</data>
 		<key>voice@2x.png</key>
 		<data>
-		dcSVIsuyGovGBOaHmaix0wD7SXg=
+		0GsLQU+rMy9PVbPQzVd+CKOiApo=
 		</data>
 		<key>voice_HL@2x.png</key>
 		<data>
-		VpK22iyYKiwrQDIJCtp0Y31VpNs=
-		</data>
-		<key>weChatBubble_Receiving_Cavern@2x.png</key>
-		<data>
-		d6icFhDF2DrmJHHSMSCTwTOmpmg=
+		0N5Idcjobp7x1fYD0d/qKPzSYxg=
 		</data>
 		<key>weChatBubble_Receiving_Solid@2x.png</key>
 		<data>
-		FV8sc8ObQWijcMmfWw6eMm3BXhs=
-		</data>
-		<key>weChatBubble_Sending_Cavern@2x.png</key>
-		<data>
-		u0THe8IOOJEwE3Yc31Axmh8aX/s=
+		XSMxKJw4wdSCGiPAOukHjbVOY0g=
 		</data>
 		<key>weChatBubble_Sending_Solid@2x.png</key>
 		<data>
-		jEK8KKbiLEXzkkWiNxnQNVzobe0=
+		3mfDxwCYebIVghNCeYe4g+9EU80=
 		</data>
 		<key>zh-Hans.lproj/MessageDisplayKitString.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2v86JH0f8YSEdYy7FdFW0xXlrNw=
+			7fzgSMzvrJpphjTWtsjIFf/gU6o=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -741,34 +549,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>AddGroupMemberBtn@2x.png</key>
-		<data>
-		ats/3YEuydebqEh8gQafNoXWWrc=
-		</data>
-		<key>AddGroupMemberBtnHL@2x.png</key>
-		<data>
-		05IG/QrKZGYcARuuQ6cwhGrUfXY=
-		</data>
-		<key>CellBlueSelected@2x.png</key>
-		<data>
-		baAMFH2TFlPyW672j3isFpYkoI4=
-		</data>
-		<key>CellGraySelected@2x.png</key>
-		<data>
-		CvnMDAgF0UWA9SsHwuPc3vcdVFQ=
-		</data>
-		<key>CellNotSelected@2x.png</key>
-		<data>
-		+arIhG3Q7t0iFUUlXnR34caFDR0=
-		</data>
-		<key>CellRedSelected@2x.png</key>
-		<data>
-		apkxcvOmepOqTsdz73lm/q3NO6A=
-		</data>
-		<key>ContactsPanelDotRect@2x.png</key>
-		<data>
-		cu4Lti1H7lwEDXkurWsGUH3LwY0=
-		</data>
 		<key>Fav_Cell_Loc@2x.png</key>
 		<data>
 		dcmi0ofin2g6j6SA4tDnSIzaJyk=
@@ -789,21 +569,17 @@
 		<data>
 		/eBkVeT+9hr2nPgrXtPn+Jq9/1k=
 		</data>
-		<key>Headers/NSMutableAttributedString+Helper.h</key>
-		<data>
-		jVKDXhu1YTD/x0zi/73Wpm3+q5M=
-		</data>
 		<key>Headers/NSString+MessageInputView.h</key>
 		<data>
 		aqJBcG5B8df03eRbYC3X0GNOYuo=
 		</data>
 		<key>Headers/NSString+XHMD5.h</key>
 		<data>
-		Qlk78Xas+7AN9UM/DsgvLAHbe2Q=
+		EvIUT6KMcZX+SbKNuZSYGyQtgj8=
 		</data>
 		<key>Headers/SECompatibility.h</key>
 		<data>
-		JPAI3mzClGWJMAL42cT6TokmOcg=
+		jdCJhm2t2TAvVGYnEB0Oeutpr0A=
 		</data>
 		<key>Headers/SEConstants.h</key>
 		<data>
@@ -819,7 +595,7 @@
 		</data>
 		<key>Headers/SESelectionGrabber.h</key>
 		<data>
-		ZGs2qQOO+S2CvYmjN0CZA/1OEQo=
+		LhyzI5TIQkM34SaR/g3szOR9nto=
 		</data>
 		<key>Headers/SETextAttachment.h</key>
 		<data>
@@ -827,15 +603,15 @@
 		</data>
 		<key>Headers/SETextEditingCaret.h</key>
 		<data>
-		cakS5an+eGxKGZaNMM/UfCfIhjk=
+		hJ2/al5xKZlXC1/9MzCIYWewn2Y=
 		</data>
 		<key>Headers/SETextGeometry.h</key>
 		<data>
-		txAcFFXP3VGHoYjeiinUtb2UdVg=
+		7WIZR7aSqzsdeeVCSvFmur2OJN4=
 		</data>
 		<key>Headers/SETextInput.h</key>
 		<data>
-		kVn1ioK3oxSZLQc0wCnG2h6othM=
+		7qehTtjM3j5z0U6kShTTMcJfOXU=
 		</data>
 		<key>Headers/SETextLayout.h</key>
 		<data>
@@ -843,11 +619,11 @@
 		</data>
 		<key>Headers/SETextMagnifierCaret.h</key>
 		<data>
-		3f2d7LeNtmwbjbBT7hwj+0M0x+k=
+		Pqxx/o9mBUYZBTcmGNubyo6y2j0=
 		</data>
 		<key>Headers/SETextMagnifierRanged.h</key>
 		<data>
-		z5lSVsLs83ickASSmEMuWxDZYno=
+		+TZCcY5Ek/JBc5MRQBJuGthM3Ok=
 		</data>
 		<key>Headers/SETextSelection.h</key>
 		<data>
@@ -855,11 +631,11 @@
 		</data>
 		<key>Headers/SETextSelectionView.h</key>
 		<data>
-		mKUAwEl84II41OCxUV3CiSm7+kQ=
+		kRyNAqht1NiIvcFFnO7IYK/DRr4=
 		</data>
 		<key>Headers/SETextView.h</key>
 		<data>
-		T3jZn+nchJnl58k7i6oCIQzSZGA=
+		LENMlk9FALKqS3gSqa2cgUGMzLA=
 		</data>
 		<key>Headers/UIImage+Alpha.h</key>
 		<data>
@@ -875,7 +651,7 @@
 		</data>
 		<key>Headers/UIImage+Utility.h</key>
 		<data>
-		SAooL6Hwday7A/OqjD36VR/uIbA=
+		KIYF4OupJo5RmeyPWRNG+/UJHGU=
 		</data>
 		<key>Headers/UIImage+XHRounded.h</key>
 		<data>
@@ -883,7 +659,7 @@
 		</data>
 		<key>Headers/UIScrollView+XHkeyboardControl.h</key>
 		<data>
-		C1Y6i5MaaRobm+WysV/W0k6MTe8=
+		E6LYWtGojaeuNc57A9YD9LwIUD4=
 		</data>
 		<key>Headers/UIView+XHRemoteImage.h</key>
 		<data>
@@ -903,7 +679,7 @@
 		</data>
 		<key>Headers/XHBubblePhotoImageView.h</key>
 		<data>
-		r/j/fr7Y3RrWW0ZwWIZJim9UcpQ=
+		GN9MFfzo5S+e1CJ56TRP4CbX1S4=
 		</data>
 		<key>Headers/XHCacheManager.h</key>
 		<data>
@@ -912,6 +688,10 @@
 		<key>Headers/XHCaptureHelper.h</key>
 		<data>
 		qDwondx9l0ISI4JnY7lch6wzX3c=
+		</data>
+		<key>Headers/XHConfigurationHelper.h</key>
+		<data>
+		qLy70wfJHYpTJKIvbrlssK8gcfc=
 		</data>
 		<key>Headers/XHDisplayEmotionViewController.h</key>
 		<data>
@@ -931,7 +711,7 @@
 		</data>
 		<key>Headers/XHEmotion.h</key>
 		<data>
-		p1HQRpyU3xVZuyC3TDf9Lpz5tX4=
+		muxcmi7IE+l9BtKNhHHMjjVSBx4=
 		</data>
 		<key>Headers/XHEmotionCollectionViewCell.h</key>
 		<data>
@@ -959,7 +739,7 @@
 		</data>
 		<key>Headers/XHFoundationMacro.h</key>
 		<data>
-		9BP8WuvzszKICN6zihZQlYUilDg=
+		OAXi1OXp5YQwswW+dQ5J0VezdF8=
 		</data>
 		<key>Headers/XHHTTPClient.h</key>
 		<data>
@@ -975,7 +755,7 @@
 		</data>
 		<key>Headers/XHMessage.h</key>
 		<data>
-		5JUspjc50Sgib1BWG+BdP93u+Wk=
+		66OZjUkM2BpYoumbDMCF97TxoIM=
 		</data>
 		<key>Headers/XHMessageAvatarFactory.h</key>
 		<data>
@@ -983,7 +763,7 @@
 		</data>
 		<key>Headers/XHMessageBubbleFactory.h</key>
 		<data>
-		1R95I+kSfG0iVh+eXINq11JzZ0k=
+		YH5uE9n6f3LS81zwfDEJ0RY+7+U=
 		</data>
 		<key>Headers/XHMessageBubbleHelper.h</key>
 		<data>
@@ -991,15 +771,15 @@
 		</data>
 		<key>Headers/XHMessageBubbleView.h</key>
 		<data>
-		Lj33IWNBG0HmaB6GunsJ1ZHvK7Y=
+		befeqg47XlwZUFmoQ5s0KGQBEvk=
 		</data>
 		<key>Headers/XHMessageInputView.h</key>
 		<data>
-		QnaBsqNIgZtxMbmGgQapbDTb2Vs=
+		ZhHhq5d2cFryFIn9qXGKDF3TKtg=
 		</data>
 		<key>Headers/XHMessageModel.h</key>
 		<data>
-		c5YJDoG4sy7xC0gOmSiHpRjBpPg=
+		BMVFzKfh2CsaFFZYlfVT42IzTMo=
 		</data>
 		<key>Headers/XHMessageTableView.h</key>
 		<data>
@@ -1007,11 +787,11 @@
 		</data>
 		<key>Headers/XHMessageTableViewCell.h</key>
 		<data>
-		Pl1HmuDyiw6qJpaUnJlcZhgWlS4=
+		CJjSgH+xJwSnxTXV1v8cg4NUvB8=
 		</data>
 		<key>Headers/XHMessageTableViewController.h</key>
 		<data>
-		ugQKAN9oPus7hMTUBX7ErN1ypi0=
+		yep5OSSTokL2xwepv6S19f66OzM=
 		</data>
 		<key>Headers/XHMessageTextView.h</key>
 		<data>
@@ -1065,37 +845,25 @@
 		<data>
 		yJ5NL6IrhVPqy2CYZd1QXYV9DFs=
 		</data>
-		<key>MoreFunctionFrame@2x.png</key>
-		<data>
-		joyykiYZrrPU5DEHQ6VNSA+grrw=
-		</data>
-		<key>MultiSelectedPanelBkg@2x.png</key>
-		<data>
-		HBUB/sWc2PBVMb32NPNxglHncHQ=
-		</data>
-		<key>MultiSelectedPanelConfirmBtnbKG@2x.png</key>
-		<data>
-		rYdbwZRkQNu4MLhStah8EJifFUQ=
-		</data>
 		<key>ReceiverVoiceNodePlaying000@2x.png</key>
 		<data>
 		H+b58WdNjEq3Jy9fFoFXz8nIFxQ=
 		</data>
 		<key>ReceiverVoiceNodePlaying001@2x.png</key>
 		<data>
-		ve5W9cCe6RACkE+4ulw04DmcvdE=
+		Zm8fEaRUUJ9ZoosnZUufBejUf6I=
 		</data>
 		<key>ReceiverVoiceNodePlaying002@2x.png</key>
 		<data>
-		oD1qQfLA33nmY7gFP9Fg33v+IOs=
+		tqxrWeNyyN0zPNqvjIBwLL426VY=
 		</data>
 		<key>ReceiverVoiceNodePlaying003@2x.png</key>
 		<data>
-		QwjAD9biP6atZkUO7HBHm3zkQHI=
+		guZlK+YNA3/A5z57Pu+PyOuM5sE=
 		</data>
 		<key>ReceiverVoiceNodePlaying@2x.png</key>
 		<data>
-		sSD3+yTCuSZkY5q9UhHIzGqTD2I=
+		tcjm1Ysw9pP5hTnXNtZiiiC+0vw=
 		</data>
 		<key>RecordCancel@2x.png</key>
 		<data>
@@ -1209,29 +977,25 @@
 		<data>
 		csIkRjZ7kX6DGycyRH0N1koDg8M=
 		</data>
-		<key>SearchIcon@2x.png</key>
-		<data>
-		aR2BxI8vsXM9J+JuznwfHPThx+A=
-		</data>
 		<key>SenderVoiceNodePlaying000@2x.png</key>
 		<data>
 		H+b58WdNjEq3Jy9fFoFXz8nIFxQ=
 		</data>
 		<key>SenderVoiceNodePlaying001@2x.png</key>
 		<data>
-		KIJ09kSTjGGFw1ht1fCt3gvyUkw=
+		b+blmbxkZTfSiegj7YwqaykgFyg=
 		</data>
 		<key>SenderVoiceNodePlaying002@2x.png</key>
 		<data>
-		xyIc/OdqvnhKFurNDz3+Y/mxdwE=
+		dC6SEPzIQR+C9mOSKBIju9oG9MY=
 		</data>
 		<key>SenderVoiceNodePlaying003@2x.png</key>
 		<data>
-		TFdsJjg79c2yDqS6lt4AofeqNos=
+		I9fcwTy5pc5AO6f3+DEF1IFH2XY=
 		</data>
 		<key>SenderVoiceNodePlaying@2x.png</key>
 		<data>
-		bo87bVfu1Ys6fg74in9Ppt4L3rE=
+		nzKgSh+3ZnwuXMWQSyClNNDnfvw=
 		</data>
 		<key>VoiceBtn_Black@2x.png</key>
 		<data>
@@ -1245,50 +1009,22 @@
 		<data>
 		sgyKq5ukhaE2rvkeIQubrW1jMCI=
 		</data>
-		<key>contacts_add_friend@2x.png</key>
-		<data>
-		gLgdZpMgPLWkTiZGkQWfNGEhZ3I=
-		</data>
-		<key>contacts_add_newmessage@2x.png</key>
-		<data>
-		sjylkJasCJnJfGqhiJJRc+7oxK0=
-		</data>
-		<key>contacts_add_photo@2x.png</key>
-		<data>
-		qhzFc8FgntgrHkmNZ3FD6fv596U=
-		</data>
-		<key>contacts_add_scan@2x.png</key>
-		<data>
-		I9RILZXr1Zfw28zIJBUjlmYc9Uc=
-		</data>
-		<key>contacts_add_voip@2x.png</key>
-		<data>
-		IACo6nRY/MkDyGkHXVDETEaHj04=
-		</data>
 		<key>en.lproj/MessageDisplayKitString.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KW7VbZddgjwOPZ0O2Ej7IQ0JP9E=
+			5attu1fe2JTTuhjUZ09sb0frT0U=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
 		<key>face@2x.png</key>
 		<data>
-		PkqglYWfIbI9bXsetI5XAxqWFkE=
+		nE1ghRflqINwQndmuU3hGZ9S/O0=
 		</data>
 		<key>face_HL@2x.png</key>
 		<data>
-		RpZecFIHoxk0TfaGIk/Fz2r0Drc=
-		</data>
-		<key>input-bar-background.png</key>
-		<data>
-		yMS0D7sCQDmVwD4oRSxQtYLLA+M=
-		</data>
-		<key>input-bar-background@2x.png</key>
-		<data>
-		V0Zl8xYWKAR7UyiVq1ElVhKA+SI=
+		VCik7fmOwBvy9Y8p/aytqXy8b4k=
 		</data>
 		<key>input-bar-flat.png</key>
 		<data>
@@ -1298,175 +1034,55 @@
 		<data>
 		Dvdtjjmqm/RF03CnmMi7uxm6MDU=
 		</data>
-		<key>input-field-cover.png</key>
+		<key>keyboard@2x.png</key>
 		<data>
-		nc3jcWtvpTPa7YHCD9zJHgxWDI4=
+		4yYUsM7jZxU/L+vtkpSeVichASc=
 		</data>
-		<key>input-field-cover@2x.png</key>
+		<key>keyboard_HL@2x.png</key>
 		<data>
-		ENE6CgnzqA2UdE6hEq6RqWOy804=
-		</data>
-		<key>keyborad@2x.png</key>
-		<data>
-		FQLGCvP9vvkzRfB16qIW9h/EhEE=
-		</data>
-		<key>keyborad_HL@2x.png</key>
-		<data>
-		I/XsMZO/06IxD1U5uShCJDXHOCs=
+		2z8+mc0Esm/ShNPglb7iOJFVSdo=
 		</data>
 		<key>msg_chat_voice_unread.png</key>
 		<data>
-		eBmAI0u0TQB+6lW0gk2xU9vxtbA=
+		zF3nN5tWim2NNb459BmirF2lqV8=
 		</data>
 		<key>msg_chat_voice_unread@2x.png</key>
 		<data>
-		CTOyY8mqW5Y0RaxzOA6gUI0M0FU=
+		O6wZdV24rGbSj0fGOdeM9bqnmFY=
 		</data>
 		<key>multiMedia@2x.png</key>
 		<data>
-		9yNcIi3zWXmsRmh0g4tFkoFXOFU=
+		7ti+5vWUIjwLRnD6Ht9i2Dzxnl0=
 		</data>
 		<key>multiMedia_HL@2x.png</key>
 		<data>
-		dOJutN1UAm9ubrXEzRiTFCI5aoY=
+		ddk1hIv9f9Npm+wqldYi6qm0pc4=
 		</data>
 		<key>placeholderImage@2x.png</key>
 		<data>
 		cPJi/+3A51RBz150RXajBPNj+so=
 		</data>
-		<key>section0_emotion0@2x.png</key>
-		<data>
-		2JOc98PNwXlanz8KHWG37ufsSRM=
-		</data>
-		<key>section0_emotion10@2x.png</key>
-		<data>
-		WVKmt9nQJnx8r3RmjhqWW1xmiyU=
-		</data>
-		<key>section0_emotion11@2x.png</key>
-		<data>
-		ObhhFIPLvkOVE02MQLPD1YJX2SY=
-		</data>
-		<key>section0_emotion12@2x.png</key>
-		<data>
-		XejvFuKrSp4aj4csxSIAm1dwFXA=
-		</data>
-		<key>section0_emotion13@2x.png</key>
-		<data>
-		EVbDg3PHMQYxBxXbW5sFFZ04Hu0=
-		</data>
-		<key>section0_emotion14@2x.png</key>
-		<data>
-		ObhhFIPLvkOVE02MQLPD1YJX2SY=
-		</data>
-		<key>section0_emotion15@2x.png</key>
-		<data>
-		XejvFuKrSp4aj4csxSIAm1dwFXA=
-		</data>
-		<key>section0_emotion1@2x.png</key>
-		<data>
-		/dJ9U97NYCMKUjF1yl77dpZDgwg=
-		</data>
-		<key>section0_emotion2@2x.png</key>
-		<data>
-		RgrUY40O7Ltma9rtFJ8Dzdt0vqI=
-		</data>
-		<key>section0_emotion3@2x.png</key>
-		<data>
-		eO3XcnCVnVNgZtOZfK0pCMHkamU=
-		</data>
-		<key>section0_emotion4@2x.png</key>
-		<data>
-		EYNcoR/dkdtWL+dOLO9PK7S3re4=
-		</data>
-		<key>section0_emotion5@2x.png</key>
-		<data>
-		dEvWG0xWxvp1ya559wZYHBUFRBI=
-		</data>
-		<key>section0_emotion6@2x.png</key>
-		<data>
-		QfVJli+/e8adath8DVr9Y501EMA=
-		</data>
-		<key>section0_emotion7@2x.png</key>
-		<data>
-		0ITKYXY2S5x+dr6BbpoyOBvcIUM=
-		</data>
-		<key>section0_emotion8@2x.png</key>
-		<data>
-		myWtn9avO9CYFqAKADqunJCog9M=
-		</data>
-		<key>section0_emotion9@2x.png</key>
-		<data>
-		qS30aIT9KKW7FxBEgoOfGQrqhKQ=
-		</data>
-		<key>sharemore_friendcard@2x.png</key>
-		<data>
-		Lj4MT11sTDbtkvjnFj4IiiPcUjU=
-		</data>
-		<key>sharemore_location@2x.png</key>
-		<data>
-		uSTrWJyg0/4q/T+2PhuW+rBeORM=
-		</data>
-		<key>sharemore_myfav@2x.png</key>
-		<data>
-		mjXbBIH2st0YTTqNyUM2DhD73oI=
-		</data>
-		<key>sharemore_openapi@2x.png</key>
-		<data>
-		Z2Whs3V6mLq8mAmVN/z+fs7choM=
-		</data>
-		<key>sharemore_pic@2x.png</key>
-		<data>
-		afisgQftxBtroXqt8x+lXDo30Ok=
-		</data>
-		<key>sharemore_video@2x.png</key>
-		<data>
-		/4BKxelrXw2KjhQaiSGbfd7JPhQ=
-		</data>
-		<key>sharemore_videovoip@2x.png</key>
-		<data>
-		a00rJxTs5tT6QYi6c41KcBwXQQM=
-		</data>
-		<key>sharemore_voiceinput@2x.png</key>
-		<data>
-		qtV5d548eiRwX7pYezEOa37VX+k=
-		</data>
-		<key>sharemore_voipvoice@2x.png</key>
-		<data>
-		zDPumhOO0wGlJF0Dg0R9sMvc0Ac=
-		</data>
-		<key>sharemore_wxtalk@2x.png</key>
-		<data>
-		2lnnB2TB59Z4V/VZRoS3Tvou7eU=
-		</data>
 		<key>voice@2x.png</key>
 		<data>
-		dcSVIsuyGovGBOaHmaix0wD7SXg=
+		0GsLQU+rMy9PVbPQzVd+CKOiApo=
 		</data>
 		<key>voice_HL@2x.png</key>
 		<data>
-		VpK22iyYKiwrQDIJCtp0Y31VpNs=
-		</data>
-		<key>weChatBubble_Receiving_Cavern@2x.png</key>
-		<data>
-		d6icFhDF2DrmJHHSMSCTwTOmpmg=
+		0N5Idcjobp7x1fYD0d/qKPzSYxg=
 		</data>
 		<key>weChatBubble_Receiving_Solid@2x.png</key>
 		<data>
-		FV8sc8ObQWijcMmfWw6eMm3BXhs=
-		</data>
-		<key>weChatBubble_Sending_Cavern@2x.png</key>
-		<data>
-		u0THe8IOOJEwE3Yc31Axmh8aX/s=
+		XSMxKJw4wdSCGiPAOukHjbVOY0g=
 		</data>
 		<key>weChatBubble_Sending_Solid@2x.png</key>
 		<data>
-		jEK8KKbiLEXzkkWiNxnQNVzobe0=
+		3mfDxwCYebIVghNCeYe4g+9EU80=
 		</data>
 		<key>zh-Hans.lproj/MessageDisplayKitString.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2v86JH0f8YSEdYy7FdFW0xXlrNw=
+			7fzgSMzvrJpphjTWtsjIFf/gU6o=
 			</data>
 			<key>optional</key>
 			<true/>

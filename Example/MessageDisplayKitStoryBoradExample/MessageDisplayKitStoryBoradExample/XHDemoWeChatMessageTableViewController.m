@@ -30,7 +30,7 @@
 }
 
 - (XHMessage *)getPhotoMessageWithBubbleMessageType:(XHBubbleMessageType)bubbleMessageType {
-    XHMessage *photoMessage = [[XHMessage alloc] initWithPhoto:[UIImage imageNamed:@"placeholderImage"] thumbnailUrl:@"http://www.pailixiu.com/jack/networkPhoto.png" originPhotoUrl:nil sender:@"Jack" timestamp:[NSDate date]];
+    XHMessage *photoMessage = [[XHMessage alloc] initWithPhoto:nil thumbnailUrl:@"http://www.pailixiu.com/jack/networkPhoto.png" originPhotoUrl:nil sender:@"Jack" timestamp:[NSDate date]];
     photoMessage.avatar = [UIImage imageNamed:@"avatar"];
     photoMessage.avatarUrl = @"http://www.pailixiu.com/jack/JieIcon@2x.png";
     photoMessage.bubbleMessageType = bubbleMessageType;
@@ -113,6 +113,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     // Custom UI
+    if (CURRENT_SYS_VERSION >= 7.0) {
+        self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan=NO;
+    }
     //    [self setBackgroundColor:[UIColor clearColor]];
     //    [self setBackgroundImage:[UIImage imageNamed:@"TableViewBackgroundImage"]];
     
@@ -250,7 +253,6 @@
         WEAKSELF
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSMutableArray *messages = [weakSelf getTestMessages];
-            sleep(3);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf insertOldMessages:messages];
                 weakSelf.loadingMoreMessage = NO;

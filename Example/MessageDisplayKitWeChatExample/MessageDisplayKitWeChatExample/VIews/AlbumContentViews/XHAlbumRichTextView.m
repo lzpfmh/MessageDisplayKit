@@ -14,17 +14,37 @@
 
 #import "XHImageViewer.h"
 
+#import "XHAlbumLikesCommentsView.h"
+
 #define kXHPhotoCollectionViewCellIdentifier @"XHPhotoCollectionViewCellIdentifier"
+
+@interface XHAlbumCollectionView : UICollectionView
+
+@end
+
+@implementation XHAlbumCollectionView
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    NSIndexPath *touchIndexPath = [self indexPathForItemAtPoint:point];
+    if (!touchIndexPath) {
+        return nil;
+    }
+    return [super hitTest:point withEvent:event];
+}
+
+@end
 
 @interface XHAlbumRichTextView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *userNameLabel;
 
-@property (nonatomic, strong) UICollectionView *sharePhotoCollectionView;
+@property (nonatomic, strong) XHAlbumCollectionView *sharePhotoCollectionView;
 
 @property (nonatomic, strong) UILabel *timestampLabel;
 @property (nonatomic, strong) UIButton *commentButton;
+
+@property (nonatomic, strong) XHAlbumLikesCommentsView *albumLikesCommentsView;
 
 @end
 
@@ -56,7 +76,19 @@
     richTextHeight += kXHAlbumContentLineSpacing;
     richTextHeight += kXHAlbumCommentButtonHeight;
     
+    richTextHeight += 4;
+    richTextHeight += 14;
+    richTextHeight += currentAlbum.albumShareComments.count * 16;
+    
     return richTextHeight;
+}
+
+#pragma mark - Actions
+
+- (void)commentButtonDidClicked:(UIButton *)sender {
+    if (self.commentButtonDidSelectedCompletion) {
+        self.commentButtonDidSelectedCompletion(sender);
+    }
 }
 
 #pragma mark - Propertys
@@ -74,13 +106,17 @@
     
     [self.sharePhotoCollectionView reloadData];
     
+    self.albumLikesCommentsView.likes = displayAlbum.albumShareLikes;
+    self.albumLikesCommentsView.comments = displayAlbum.albumShareComments;
+    [self.albumLikesCommentsView reloadData];
+    
     [self setNeedsLayout];
 }
 
 - (UIImageView *)avatarImageView {
     if (!_avatarImageView) {
         _avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kXHAlbumAvatarSpacing, kXHAlbumAvatarSpacing, kXHAvatarImageSize, kXHAvatarImageSize)];
-        _avatarImageView.image = [UIImage imageNamed:@"Avatar"];
+        _avatarImageView.image = [UIImage imageNamed:@"MeIcon"];
     }
     return _avatarImageView;
 }
@@ -108,9 +144,9 @@
     return _richTextView;
 }
 
-- (UICollectionView *)sharePhotoCollectionView {
+- (XHAlbumCollectionView *)sharePhotoCollectionView {
     if (!_sharePhotoCollectionView) {
-        _sharePhotoCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[[XHAlbumCollectionViewFlowLayout alloc] init]];
+        _sharePhotoCollectionView = [[XHAlbumCollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[[XHAlbumCollectionViewFlowLayout alloc] init]];
         _sharePhotoCollectionView.backgroundColor = self.richTextView.backgroundColor;
         [_sharePhotoCollectionView registerClass:[XHAlbumPhotoCollectionViewCell class] forCellWithReuseIdentifier:kXHPhotoCollectionViewCellIdentifier];
         [_sharePhotoCollectionView setScrollsToTop:NO];
@@ -135,10 +171,17 @@
         _commentButton = [[UIButton alloc] initWithFrame:CGRectZero];
         [_commentButton setImage:[UIImage imageNamed:@"AlbumOperateMore"] forState:UIControlStateNormal];
         [_commentButton setImage:[UIImage imageNamed:@"AlbumOperateMoreHL"] forState:UIControlStateHighlighted];
+        [_commentButton addTarget:self action:@selector(commentButtonDidClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _commentButton;
 }
 
+- (XHAlbumLikesCommentsView *)albumLikesCommentsView {
+    if (!_albumLikesCommentsView) {
+        _albumLikesCommentsView = [[XHAlbumLikesCommentsView alloc] initWithFrame:CGRectZero];
+    }
+    return _albumLikesCommentsView;
+}
 #pragma mark - Life Cycle
 
 - (void)setup {
@@ -155,6 +198,8 @@
     
     [self addSubview:self.timestampLabel];
     [self addSubview:self.commentButton];
+    
+    [self addSubview:self.albumLikesCommentsView];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -190,7 +235,7 @@
     self.sharePhotoCollectionView.frame = sharePhotoCollectionViewFrame;
     
     CGRect commentButtonFrame = self.commentButton.frame;
-    commentButtonFrame.origin = CGPointMake(CGRectGetWidth(self.bounds) - kXHAlbumAvatarSpacing - kXHAlbumCommentButtonWidth, CGRectGetMaxY(sharePhotoCollectionViewFrame) + kXHAlbumContentLineSpacing);
+    commentButtonFrame.origin = CGPointMake(CGRectGetMaxX(richTextViewFrame) - kXHAlbumCommentButtonWidth, CGRectGetMaxY(sharePhotoCollectionViewFrame) + kXHAlbumContentLineSpacing);
     commentButtonFrame.size = CGSizeMake(kXHAlbumCommentButtonWidth, kXHAlbumCommentButtonHeight);
     self.commentButton.frame = commentButtonFrame;
     
@@ -199,8 +244,14 @@
     timestampLabelFrame.size = CGSizeMake(CGRectGetWidth(self.bounds) - kXHAlbumAvatarSpacing * 3 - kXHAvatarImageSize - kXHAlbumCommentButtonWidth, CGRectGetHeight(commentButtonFrame));
     self.timestampLabel.frame = timestampLabelFrame;
     
+    // 这里出现延迟布局的情况，所以就不能正常排版
+    CGRect likesCommentsViewFrame = self.albumLikesCommentsView.frame;
+    likesCommentsViewFrame.origin = CGPointMake(CGRectGetMinX(richTextViewFrame), CGRectGetMaxY(timestampLabelFrame));
+    likesCommentsViewFrame.size.width = CGRectGetWidth(richTextViewFrame);
+    self.albumLikesCommentsView.frame = likesCommentsViewFrame;
+    
     CGRect frame = self.frame;
-    frame.size.height = CGRectGetMaxY(commentButtonFrame);
+    frame.size.height = CGRectGetMaxY(likesCommentsViewFrame) + kXHAlbumAvatarSpacing;
     self.frame = frame;
 }
 

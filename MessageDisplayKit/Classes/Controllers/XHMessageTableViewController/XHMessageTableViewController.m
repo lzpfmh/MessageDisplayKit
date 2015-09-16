@@ -26,7 +26,7 @@
  */
 @property (nonatomic, assign) CGFloat keyboardViewHeight;
 
-@property (nonatomic, assign) XHInputViewType textViewInputViewType;
+@property (nonatomic, assign, readwrite) XHInputViewType textViewInputViewType;
 
 @property (nonatomic, weak, readwrite) XHMessageTableView *messageTableView;
 @property (nonatomic, weak, readwrite) XHMessageInputView *messageInputView;
@@ -187,14 +187,6 @@
  */
 - (void)didSendGeolocationsMessageWithGeolocaltions:(NSString *)geolcations location:(CLLocation *)location;
 
-#pragma mark - Other Menu View Frame Helper Mehtod
-/**
- *  根据显示或隐藏的需求对所有第三方Menu进行管理
- *
- *  @param hide 需求条件
- */
-- (void)layoutOtherMenuViewHiden:(BOOL)hide;
-
 #pragma mark - Voice Recording Helper Method
 /**
  *  开始录音
@@ -242,7 +234,7 @@
         
         [weakSelf exMainQueue:^{
             weakSelf.messages = messages;
-            [weakSelf.messageTableView reloadData];
+            [weakSelf.messageTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             [weakSelf scrollToBottomAnimated:YES];
         }];
     }];
@@ -261,33 +253,48 @@
 
 static CGPoint  delayOffset = {0.0};
 // http://stackoverflow.com/a/11602040 Keep UITableView static when inserting rows at the top
-- (void)insertOldMessages:(NSArray *)oldMessages {
+- (void)insertOldMessages:(NSArray *)oldMessages completion:(void (^)())completion {
     WEAKSELF
     [self exChangeMessageDataSourceQueue:^{
-        NSMutableArray *messages = [NSMutableArray arrayWithArray:oldMessages];
-        [messages addObjectsFromArray:weakSelf.messages];
-        
         delayOffset = weakSelf.messageTableView.contentOffset;
-        NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:oldMessages.count];
+        NSMutableArray *indexPaths = [[NSMutableArray alloc] initWithCapacity:oldMessages.count];
+        NSMutableIndexSet *indexSets = [[NSMutableIndexSet alloc] init];
         [oldMessages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
             [indexPaths addObject:indexPath];
             
-            delayOffset.y += [weakSelf calculateCellHeightWithMessage:[messages objectAtIndex:idx] atIndexPath:indexPath];
+            delayOffset.y += [weakSelf calculateCellHeightWithMessage:[oldMessages objectAtIndex:idx] atIndexPath:indexPath];
+            [indexSets addIndex:idx];
         }];
+        
+        NSMutableArray *messages = [[NSMutableArray alloc] initWithArray:weakSelf.messages];
+        [messages insertObjects:oldMessages atIndexes:indexSets];
+        
         
         [weakSelf exMainQueue:^{
             [UIView setAnimationsEnabled:NO];
-            [weakSelf.messageTableView beginUpdates];
+            weakSelf.messageTableView.userInteractionEnabled = NO;
+            //[self.messageTableView beginUpdates];
+            
             weakSelf.messages = messages;
+            
             [weakSelf.messageTableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
             
-            [weakSelf.messageTableView setContentOffset:delayOffset animated:NO];
-            [weakSelf.messageTableView endUpdates];
+            //[self.messageTableView endUpdates];
+            
             [UIView setAnimationsEnabled:YES];
             
+            [weakSelf.messageTableView setContentOffset:delayOffset animated:NO];
+            weakSelf.messageTableView.userInteractionEnabled = YES;
+            if (completion) {
+                completion();
+            }
         }];
     }];
+}
+
+- (void)insertOldMessages:(NSArray *)oldMessages {
+    [self insertOldMessages:oldMessages completion:nil];
 }
 
 #pragma mark - Propertys
@@ -443,27 +450,27 @@ static CGPoint  delayOffset = {0.0};
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
-	if (![self shouldAllowScroll])
+    if (![self shouldAllowScroll])
         return;
-	
+    
     NSInteger rows = [self.messageTableView numberOfRowsInSection:0];
     
     if (rows > 0) {
         [self.messageTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows - 1 inSection:0]
-                              atScrollPosition:UITableViewScrollPositionBottom
-                                      animated:animated];
+                                     atScrollPosition:UITableViewScrollPositionBottom
+                                             animated:animated];
     }
 }
 
 - (void)scrollToRowAtIndexPath:(NSIndexPath *)indexPath
-			  atScrollPosition:(UITableViewScrollPosition)position
-					  animated:(BOOL)animated {
-	if (![self shouldAllowScroll])
+              atScrollPosition:(UITableViewScrollPosition)position
+                      animated:(BOOL)animated {
+    if (![self shouldAllowScroll])
         return;
-	
-	[self.messageTableView scrollToRowAtIndexPath:indexPath
-						  atScrollPosition:position
-								  animated:animated];
+    
+    [self.messageTableView scrollToRowAtIndexPath:indexPath
+                                 atScrollPosition:position
+                                         animated:animated];
 }
 
 #pragma mark - Previte Method
@@ -510,14 +517,19 @@ static CGPoint  delayOffset = {0.0};
     if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
     // 默认设置用户滚动为NO
     _isUserScrolling = NO;
     
     // 初始化message tableView
-	XHMessageTableView *messageTableView = [[XHMessageTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-	messageTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	messageTableView.dataSource = self;
-	messageTableView.delegate = self;
+    XHMessageTableView *messageTableView = [[XHMessageTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    messageTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    messageTableView.dataSource = self;
+    messageTableView.delegate = self;
     messageTableView.separatorColor = [UIColor clearColor];
     messageTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -530,7 +542,7 @@ static CGPoint  delayOffset = {0.0};
     }
     [self.view addSubview:messageTableView];
     [self.view sendSubviewToBack:messageTableView];
-	_messageTableView = messageTableView;
+    _messageTableView = messageTableView;
     
     // 设置Message TableView 的bottom edg
     CGFloat inputViewHeight = (self.inputViewStyle == XHMessageInputViewStyleFlat) ? 45.0f : 40.0f;
@@ -573,7 +585,7 @@ static CGPoint  delayOffset = {0.0};
     }
     
     // block回调键盘通知
-    self.messageTableView.keyboardWillChange = ^(CGRect keyboardRect, UIViewAnimationOptions options, double duration, BOOL showKeyborad) {
+    self.messageTableView.keyboardWillChange = ^(CGRect keyboardRect, UIViewAnimationOptions options, double duration, BOOL showKeyboard) {
         if (weakSelf.textViewInputViewType == XHInputViewTypeText) {
             [UIView animateWithDuration:duration
                                   delay:0.0
@@ -596,7 +608,7 @@ static CGPoint  delayOffset = {0.0};
                                  
                                  [weakSelf setTableViewInsetsWithBottomValue:weakSelf.view.frame.size.height
                                   - weakSelf.messageInputView.frame.origin.y];
-                                 if (showKeyborad)
+                                 if (showKeyboard)
                                      [weakSelf scrollToBottomAnimated:NO];
                              }
                              completion:nil];
@@ -641,27 +653,31 @@ static CGPoint  delayOffset = {0.0};
     
     // KVO 检查contentSize
     [self.messageInputView.inputTextView addObserver:self
-                                     forKeyPath:@"contentSize"
-                                        options:NSKeyValueObservingOptionNew
-                                        context:nil];
+                                          forKeyPath:@"contentSize"
+                                             options:NSKeyValueObservingOptionNew
+                                             context:nil];
+    
+    [self.messageInputView.inputTextView setEditable:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    // 取消输入框
-    [self.messageInputView.inputTextView resignFirstResponder];
-    [self setEditing:NO animated:YES];
+    
+    if (self.textViewInputViewType != XHInputViewTypeNormal) {
+        [self layoutOtherMenuViewHiden:YES];
+    }
     
     // remove键盘通知或者手势
     [self.messageTableView disSetupPanGestureControlKeyboardHide:self.allowsPanToDismissKeyboard];
     
     // remove KVO
     [self.messageInputView.inputTextView removeObserver:self forKeyPath:@"contentSize"];
+    [self.messageInputView.inputTextView setEditable:NO];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.    
+    // Do any additional setup after loading the view.
     // 初始化消息页面布局
     [self initilzer];
     [[XHMessageBubbleView appearance] setFont:[UIFont systemFontOfSize:16.0f]];
@@ -703,13 +719,11 @@ static CGPoint  delayOffset = {0.0};
 
 - (NSString *)getRecorderPath {
     NSString *recorderPath = nil;
+    recorderPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex: 0];
     NSDate *now = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yy-MMMM-dd";
-    recorderPath = [[NSString alloc] initWithFormat:@"%@/Documents/", NSHomeDirectory()];
-//    dateFormatter.dateFormat = @"hh-mm-ss";
-    dateFormatter.dateFormat = @"yyyy-MM-dd-hh-mm-ss";
-    recorderPath = [recorderPath stringByAppendingFormat:@"%@-MySound.caf", [dateFormatter stringFromDate:now]];
+    [dateFormatter setDateFormat:@"yyyyMMddHHmmssSSS"];
+    recorderPath = [recorderPath stringByAppendingFormat:@"%@-MySound.m4a", [dateFormatter stringFromDate:now]];
     return recorderPath;
 }
 
@@ -800,7 +814,7 @@ static CGPoint  delayOffset = {0.0};
     UIEdgeInsets insets = UIEdgeInsetsZero;
     
     if ([self respondsToSelector:@selector(topLayoutGuide)]) {
-        insets.top = 64;
+        insets.top = self.topLayoutGuide.length;
     }
     
     insets.bottom = bottom;
@@ -937,7 +951,9 @@ static CGPoint  delayOffset = {0.0};
         
         [self scrollToBottomAnimated:NO];
     } completion:^(BOOL finished) {
-        
+        if (hide) {
+            self.textViewInputViewType = XHInputViewTypeNormal;
+        }
     }];
 }
 
@@ -989,7 +1005,7 @@ static CGPoint  delayOffset = {0.0};
 
 - (void)inputTextViewDidBeginEditing:(XHMessageTextView *)messageInputTextView {
     if (!self.previousTextViewContentHeight)
-		self.previousTextViewContentHeight = [self getTextViewContentH:messageInputTextView];
+        self.previousTextViewContentHeight = [self getTextViewContentH:messageInputTextView];
 }
 
 - (void)didChangeSendVoiceAction:(BOOL)changed {
@@ -1108,6 +1124,9 @@ static CGPoint  delayOffset = {0.0};
             }];
             break;
         }
+        case 4:{
+            break;
+        }
         default:
             break;
     }
@@ -1139,7 +1158,7 @@ static CGPoint  delayOffset = {0.0};
     if ([self.delegate respondsToSelector:@selector(shouldLoadMoreMessagesScrollToTop)]) {
         BOOL shouldLoadMoreMessages = [self.delegate shouldLoadMoreMessagesScrollToTop];
         if (shouldLoadMoreMessages) {
-            if (scrollView.contentOffset.y >=0 && scrollView.contentOffset.y <= 44) {
+            if (scrollView.contentOffset.y >= 0 && scrollView.contentOffset.y <= 44) {
                 if (!self.loadingMoreMessage) {
                     if ([self.delegate respondsToSelector:@selector(loadMoreMessagesScrollTotop)]) {
                         [self.delegate loadMoreMessagesScrollTotop];
@@ -1151,7 +1170,7 @@ static CGPoint  delayOffset = {0.0};
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-	self.isUserScrolling = YES;
+    self.isUserScrolling = YES;
     
     UIMenuController *menu = [UIMenuController sharedMenuController];
     if (menu.isMenuVisible) {
@@ -1193,6 +1212,12 @@ static CGPoint  delayOffset = {0.0};
     
     id <XHMessageModel> message = [self.dataSource messageForRowAtIndexPath:indexPath];
     
+    // 如果需要定制复杂的业务UI，那么就实现该DataSource方法
+    if ([self.dataSource respondsToSelector:@selector(tableView:cellForRowAtIndexPath:targetMessage:)]) {
+        UITableViewCell *tableViewCell = [self.dataSource tableView:tableView cellForRowAtIndexPath:indexPath targetMessage:message];
+        return tableViewCell;
+    }
+    
     BOOL displayTimestamp = YES;
     if ([self.delegate respondsToSelector:@selector(shouldDisplayTimestampForRowAtIndexPath:)]) {
         displayTimestamp = [self.delegate shouldDisplayTimestampForRowAtIndexPath:indexPath];
@@ -1222,7 +1247,17 @@ static CGPoint  delayOffset = {0.0};
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     id <XHMessageModel> message = [self.dataSource messageForRowAtIndexPath:indexPath];
-    return [self calculateCellHeightWithMessage:message atIndexPath:indexPath];
+    
+    CGFloat calculateCellHeight = 0;
+    
+    if ([self.delegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:targetMessage:)]) {
+        calculateCellHeight = [self.delegate tableView:tableView heightForRowAtIndexPath:indexPath targetMessage:message];
+        return calculateCellHeight;
+    } else {
+        calculateCellHeight = [self calculateCellHeightWithMessage:message atIndexPath:indexPath];
+    }
+    
+    return calculateCellHeight;
 }
 
 #pragma mark - Key-value Observing

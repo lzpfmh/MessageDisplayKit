@@ -7,11 +7,12 @@
 //
 
 #import "XHBubblePhotoImageView.h"
-#import "XHMacro.h"
 
 #import "UIView+XHRemoteImage.h"
-
 #import "UIImage+Resize.h"
+
+#import "XHConfigurationHelper.h"
+#import "XHMacro.h"
 
 @interface XHBubblePhotoImageView ()
 
@@ -51,6 +52,12 @@
         WEAKSELF
         [self addSubview:self.activityIndicatorView];
         [self.activityIndicatorView startAnimating];
+        NSString *placeholderImageName = [[XHConfigurationHelper appearance].messageInputViewStyle objectForKey:kXHMessageTablePlaceholderImageNameKey];
+        if (!placeholderImageName) {
+            placeholderImageName = @"placeholderImage";
+        }
+        
+        self.messagePhoto = [UIImage imageNamed:placeholderImageName];
         [self setImageWithURL:[NSURL URLWithString:thumbnailUrl] placeholer:nil showActivityIndicatorView:NO completionBlock:^(UIImage *image, NSURL *url, NSError *error) {
             if ([url.absoluteString isEqualToString:thumbnailUrl]) {
 
@@ -112,10 +119,10 @@
     [self.messagePhoto drawInRect:rect];
     
     CGFloat width = rect.size.width;
-    CGFloat height = rect.size.height+1;//莫名其妙会出现绘制底部有残留 +1像素遮盖
+    CGFloat height = rect.size.height + 1;//莫名其妙会出现绘制底部有残留 +1像素遮盖
     // 简便起见，这里把圆角半径设置为长和宽平均值的1/10
     CGFloat radius = 6;
-    CGFloat margin = 8;//留出上下左右的边距
+    CGFloat margin = kXHBubblePhotoMargin;//留出上下左右的边距
     
     CGFloat triangleSize = 8;//三角形的边长
     CGFloat triangleMarginTop = 8;//三角形距离圆角的距离

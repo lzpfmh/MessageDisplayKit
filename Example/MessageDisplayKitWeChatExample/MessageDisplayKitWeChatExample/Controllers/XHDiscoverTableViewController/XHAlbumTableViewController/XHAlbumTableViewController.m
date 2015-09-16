@@ -16,7 +16,10 @@
 
 #import "XHStoreManager.h"
 
-@interface XHAlbumTableViewController ()
+#import "XHAlbumOperationView.h"
+#import "XHSendMessageView.h"
+
+@interface XHAlbumTableViewController () <XHAlbumTableViewCellDelegate, UITextFieldDelegate, XHSendMessageViewDelegate>
 
 /**
  *  视觉差的TableViewHeaderView
@@ -25,9 +28,47 @@
 
 @property (nonatomic, strong) XHPhotographyHelper *photographyHelper;
 
+@property (nonatomic, strong) XHAlbumOperationView *operationView;
+@property (nonatomic, strong) XHSendMessageView *sendMessageView;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+
 @end
 
 @implementation XHAlbumTableViewController
+
+#pragma mark - Life Cycle
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.title = NSLocalizedStringFromTable(@"Album", @"MessageDisplayKitString", @"朋友圈");
+    
+    [self.view addSubview:self.sendMessageView];
+    
+    [self configureBarbuttonItemStyle:XHBarbuttonItemStyleCamera action:^{
+        DLog(@"发送朋友圈");
+    }];
+    
+    self.tableView.tableHeaderView = self.albumHeaderContainerViewPathCover;
+    
+    [self configuraTableViewNormalSeparatorInset];
+    
+    [self loadDataSource];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    self.albumHeaderContainerViewPathCover = nil;
+}
 
 #pragma mark - Propertys
 
@@ -67,6 +108,36 @@
     return _photographyHelper;
 }
 
+- (XHAlbumOperationView *)operationView {
+    if (!_operationView) {
+        _operationView = [XHAlbumOperationView initailzerAlbumOperationView];
+        WEAKSELF
+        _operationView.didSelectedOperationCompletion = ^(XHAlbumOperationType operationType) {
+            STRONGSELF
+            NSLog(@"operationType : %ld", operationType);
+            switch (operationType) {
+                case XHAlbumOperationTypeLike:
+                    [strongSelf addLike];
+                    break;
+                case XHAlbumOperationTypeReply:
+                    [strongSelf.sendMessageView becomeFirstResponderForTextField];
+                    break;
+                default:
+                    break;
+            }
+        };
+    }
+    return _operationView;
+}
+
+- (XHSendMessageView *)sendMessageView {
+    if (!_sendMessageView) {
+        _sendMessageView = [[XHSendMessageView alloc] initWithFrame:CGRectZero];
+        _sendMessageView.sendMessageDelegate = self;
+    }
+    return _sendMessageView;
+}
+
 #pragma mark - DataSource
 
 - (void)loadDataSource {
@@ -82,35 +153,42 @@
     });
 }
 
-#pragma mark - Life Cycle
+#pragma mark - XHSendMessageView Delegate
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)addLike {
+    if (self.selectedIndexPath && self.selectedIndexPath.row < self.dataSource.count) {
+        XHAlbum *updateCurrentAlbum = self.dataSource[self.selectedIndexPath.row];
+        NSMutableArray *likes = [[NSMutableArray alloc] initWithArray:updateCurrentAlbum.albumShareLikes];
+        [likes insertObject:@"仔仔" atIndex:0];
+        updateCurrentAlbum.albumShareLikes = likes;
+        [self.tableView reloadRowsAtIndexPaths:@[self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.title = NSLocalizedStringFromTable(@"Album", @"MessageDisplayKitString", @"朋友圈");
-    
-    [self configureBarbuttonItemStyle:XHBarbuttonItemStyleCamera action:^{
-        DLog(@"发送朋友圈");
-    }];
-    
-    self.tableView.tableHeaderView = self.albumHeaderContainerViewPathCover;
-    
-    [self configuraTableViewNormalSeparatorInset];
-    
-    [self loadDataSource];
+- (void)didSendMessage:(NSString *)message albumInputView:(XHSendMessageView *)sendMessageView {
+    if (self.selectedIndexPath && self.selectedIndexPath.row < self.dataSource.count) {
+        XHAlbum *updateCurrentAlbum = self.dataSource[self.selectedIndexPath.row];
+        NSMutableArray *comments = [[NSMutableArray alloc] initWithArray:updateCurrentAlbum.albumShareComments];
+        [comments insertObject:message atIndex:0];
+        updateCurrentAlbum.albumShareComments = comments;
+        [self.tableView reloadRowsAtIndexPaths:@[self.selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        
+        [sendMessageView finishSendMessage];
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - XHAlbumTableViewCellDelegate
 
-- (void)dealloc {
-    self.albumHeaderContainerViewPathCover = nil;
+- (void)didShowOperationView:(UIButton *)sender indexPath:(NSIndexPath *)indexPath {
+    CGRect rectInTableView = [self.tableView rectForRowAtIndexPath:indexPath];
+    CGFloat origin_Y = rectInTableView.origin.y + sender.frame.origin.y;
+    CGRect targetRect = CGRectMake(CGRectGetMinX(sender.frame), origin_Y, CGRectGetWidth(sender.bounds), CGRectGetHeight(sender.bounds));
+    if (self.operationView.shouldShowed) {
+        [self.operationView dismiss];
+        return;
+    }
+    self.selectedIndexPath = indexPath;
+    [self.operationView showAtView:self.tableView rect:targetRect];
 }
 
 #pragma mark- UIScrollView Delegate
@@ -128,6 +206,12 @@
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.operationView dismiss];
+    
+    [self.sendMessageView resignFirstResponderForInputTextFields];
+    
+    self.selectedIndexPath = nil;
+    
     [_albumHeaderContainerViewPathCover scrollViewWillBeginDragging:scrollView];
 }
 
@@ -139,9 +223,11 @@
     XHAlbumTableViewCell *albumTableViewCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!albumTableViewCell) {
         albumTableViewCell = [[XHAlbumTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        albumTableViewCell.delegate = self;
     }
     
     if (indexPath.row < self.dataSource.count) {
+        albumTableViewCell.indexPath = indexPath;
         albumTableViewCell.currentAlbum = self.dataSource[indexPath.row];
     }
     

@@ -126,6 +126,12 @@
                                                                    onPage:page];
         XHShareMenuItemView *shareMenuItemView = [[XHShareMenuItemView alloc] initWithFrame:shareMenuItemViewFrame];
         
+        if (shareMenuItem.titleColor) {
+            shareMenuItemView.shareMenuItemTitleLabel.textColor = shareMenuItem.titleColor;
+        }
+        if (shareMenuItem.titleFont) {
+            shareMenuItemView.shareMenuItemTitleLabel.font = shareMenuItem.titleFont;
+        }
         shareMenuItemView.shareMenuItemButton.tag = index;
         [shareMenuItemView.shareMenuItemButton addTarget:self action:@selector(shareMenuItemButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [shareMenuItemView.shareMenuItemButton setImage:shareMenuItem.normalIconImage forState:UIControlStateNormal];
@@ -209,10 +215,10 @@
 }
 
 - (void)dealloc {
-    self.shareMenuItems = nil;
-    self.shareMenuScrollView.delegate = self;
-    self.shareMenuScrollView = nil;
-    self.shareMenuPageControl = nil;
+    _shareMenuItems = nil;
+    _shareMenuScrollView.delegate = nil;
+    _shareMenuScrollView = nil;
+    _shareMenuPageControl = nil;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
